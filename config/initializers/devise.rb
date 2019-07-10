@@ -6,7 +6,20 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = 'a271b23438ac810ec694f0a64460d0da2657a7554208d27cb2058524b6f2860d9ef64863d300932620009075c493a5936358d8f436bb7059f32f97770acb006e'
+  # config.secret_key = '6c6c8eaf2e55fb808d56d0d6576a1df08cbcf947c114ecd3e84deeba280390a333215ba97b5a1d73ad64a21768cfc053dbe3de0abd5754fc950243aa0a65127a'
+  config.secret_key = '6c6c8eaf2e55fb808d56d0d6576a1df08cbcf947c114ecd3e84deeba280390a333215ba97b5a1d73ad64a21768cfc053dbe3de0abd5754fc950243aa0a65127a'
+
+  config.jwt do |jwt|
+    #TODO Assign this to environment variable before production deployment!
+    jwt.secret = '\x85\x11\xFA\xEF\xF2A\x11\xC7\x90\x9C!{\xDC\x11W\xFB\x93\xE5\xA3\xCD\xE3\xC2\x9E#7\xC4\xCDa\xCF\xC9/\xEA'
+    jwt.secret = 'INSER SECRET HERE'
+    jwt.dispatch_requests = [
+      ['POST', %r{^/users/sign_in$}],
+      ['GET', %r{^/$}]
+    ]
+    jwt.request_formats = { user: [:json]}
+    jwt.expiration_time = 8.hours.to_i
+  end
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
@@ -102,7 +115,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 11
 
   # Set up a pepper to generate the hashed password.
-  # config.pepper = '97ae524281e2bc8bfbd3975389b032d398aee9bc9f9eeea4bcb92bb0b995fabbf9635f034fb47254dcace12a98271c671a9e8999c08c59f892f038d7f21b6869'
+  # config.pepper = '894b325270306cbbf6c38ca12a81c69a279963a184512eea470d057f6c3102345f68a35075f5447c106e65252738806b30682355907c3afe285e2ca491d14874'
 
   # Send a notification email when the user's password is changed
   # config.send_password_change_notification = false
